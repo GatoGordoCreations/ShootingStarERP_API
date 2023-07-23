@@ -1,0 +1,22 @@
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+    - name: Deploy to Testing Environment
+      id: APIResponse
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: http://aspire.asuscomm.com:8085/api/deploy?batpath=C:/Users/Administrator/Desktop/Windows Services/run.bat
+        method: GET
+        timeout: 20000
+    - name: Show Response
+      run: |
+        echo ${{ steps.APIResponse.outputs.headers }}
+        echo ${{ steps.APIResponse.outputs.response }}
